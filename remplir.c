@@ -38,6 +38,7 @@ int complet(grille g,int n)
 			{
 				taille++;//le bateau à une taille de 1
 				tab_est_passe[i][j] = 1;//on coche la case
+				
 				if((j+1<n)&&(g[i][j+1]==COLORIER))//horizontale
 				{
 					taille++;//le bateau a une taille de 2
@@ -59,6 +60,23 @@ int complet(grille g,int n)
 					}
 				}
 				
+				switch(taille)
+				{
+					case 2 : if(torpilleur>0)
+					
+					case 3 : if(torpilleur>0)
+					
+					case 4 : if(torpilleur>0)
+					
+					case 6 :if(porte_avion>0)
+					
+					default : 
+				}
+				taille = 0;
+	int porte_avion =  1;
+    int croiseur =  2;
+	int contre_torpilleur = 3;
+	int torpilleur = 4;			
 			}
 		}
 	}
