@@ -6,6 +6,8 @@
 #define T_CROISEUR 4
 #define T_CONTRE_TORPILLEURS 3
 #define T_TORPILLEURS 2
+#define COLORIER 'N'
+#define BLANC 'B'
 
 typedef char** grille;
 
