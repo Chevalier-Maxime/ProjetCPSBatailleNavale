@@ -4,13 +4,25 @@
  * 
  */
 
-
+#ifndef STDIO_H
+#define STDIO_H
 #include <stdio.h>
+#endif /* STDIO_H  */
+
+#ifndef STDLIB_H
+#define STDLIB_H
 #include <stdlib.h>
+#endif /* STDLIB_H  */
 
-
+#ifndef STRUCTUREDONNEE_H
+#define STRUCTUREDONNEE_H
 #include "structureDonnee.h"
+#endif /* STRUCTUREDONNEE_H  */
 
+#ifndef 
+#define STRUCTUREDONNEE_H
+#include "structureDonnee.h"
+#endif /* STRUCTUREDONNEE_H  */
 
 int main(int argc, char **argv)
 {
@@ -27,7 +39,7 @@ int main(int argc, char **argv)
 	if(taille <10)
 	{
 		fprintf(stderr,"Veuillez saisir un entier valide ( >0 et compose de chiffres uniquement)");
-		exit(1);
+		return 1;
 	}
 	
 	int i;
@@ -47,9 +59,10 @@ int main(int argc, char **argv)
 		 G[i] = (char *)malloc(taille * sizeof(char));
 	 }
 	 
-	 //On initialise G2 pour le jeu
-	 initialiser_grille(G, taille);
+	//On initialise G2 pour le jeu
+	initialiser_grille(G, taille);
 	
+	//afficher les grilles 
 	
 	return 0;
 }
