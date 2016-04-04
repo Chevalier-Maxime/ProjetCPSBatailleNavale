@@ -13,115 +13,123 @@ FILE* ouvrir_fichier()
 	scanf("%s",nomFichier);
 	return fopen(nomFichier,"r");
 }
-
+/*1 si ok ; 0 sinon*/
 int complet(grille g,int n)
 {
-	int porte_avion =  1;
-    int croiseur =  2;
-	int contre_torpilleur = 3;
-	int torpilleur = 4;
-	int tab_est_passe[n][n];
-	int taille = 0;
+	int porte_avion =  NB_PORTE_AVION;
+    int croiseur =  NB_CROISEUR;
+	int contre_torpilleur = NB_CONTRE_TORPILLEURS;
+	int torpilleur = NB_TORPILLEURS;
 	
+	int tab_est_passe[n][n];
+	
+	int taille = 0;
 	int i,j,k;
+	
 	for(i=0;i<n;i++)
 	{
 		for(j=0;j<n;j++)
-			tab_est_passe[i][j]=0;
+		{	tab_est_passe[i][j]=0;}
 	}
 	
 	for(i=0;i<n;i++)
 	{
 		for(j=0;j<n;j++)
 		{
-			if((!tab_est_passe[i][j])&&(g[i][j]==COLORIER))//Si la case est colo
+			if((!tab_est_passe[i][j])&&(g[i][j]==COLORIER))
 			{
-				taille++;//le bateau à une taille de 1
+				taille++;
 				tab_est_passe[i][j] = 1;//on coche la case
 				
 				if((j+1<n)&&(g[i][j+1]==COLORIER))//horizontale
 				{
-					taille++;//le bateau a une taille de 2
+					
+					if((i+1<n)&&(g[i+1][j+1]==COLORIER)){printf("Les bateaux sont colles\n");return 0;}//bateau collé
+					
+					taille++;
 					tab_est_passe[i][j+1] = 1;//on coche la case
-					for(k = j+1;g[i][k]==COLORIER;k++)
+					
+					for(k = j+2;g[i][k]==COLORIER;k++)
 					{
+						if((i+1<n)&&(g[i+1][k]==COLORIER)){printf("Les bateaux sont colles\n");return 0;}//bateau collé
+						
 						tab_est_passe[i][k] = 1;
 						taille++;
 					}
 				}
-				if((i+1<n)&&(g[i+1][j]==COLORIER))//verticale
+				else if((i+1<n)&&(g[i+1][j]==COLORIER))//verticale
 				{
-					taille++;//le bateau a une taille de 2
+					if((j+1<n)&&(g[i+1][j+1]==COLORIER)){printf("Les bateaux sont colles\n");return 0;}//bateau collé
+					taille++;
 					tab_est_passe[i+1][j] = 1;//on coche la case
-					for(k = i+1;g[k][j]==COLORIER;k++)
+					
+					for(k = i+2;g[k][j]==COLORIER;k++)
 					{
+						if((j+1<n)&&(g[k][j+1]==COLORIER)){printf("Les bateaux sont colles\n");return 0;}//bateau collé
 						tab_est_passe[k][j] = 1;
 						taille++;
 					}
 				}
-				
 				switch(taille)
 				{
-					case 2 : if(torpilleur>0)
+					case T_TORPILLEURS : 		if(torpilleur>0){torpilleur--;}
+												else{printf("Trop de torpilleur\n");return 0;}//erreur bateau
+												break;
 					
-					case 3 : if(torpilleur>0)
+					case T_CONTRE_TORPILLEURS : if(contre_torpilleur>0){contre_torpilleur--;}
+												else{printf("Trop de contre torpilleur\n");return 0;}//erreur bateau
+												break;
 					
-					case 4 : if(torpilleur>0)
+					case T_CROISEUR : 			if(croiseur>0){croiseur--;}
+												else{printf("Trop de croisseur\n");return 0;}//erreur bateau
+												break;
 					
-					case 6 :if(porte_avion>0)
-					
-					default : 
+					case T_PORTE_AVION : 		if(porte_avion>0){porte_avion--;}
+												else{printf("Trop de porte avion\n");return 0;}//erreur bateau
+												break;
+					default : printf("Erreur taille\n");return 0;//erreur de taille
 				}
 				taille = 0;
-	int porte_avion =  1;
-    int croiseur =  2;
-	int contre_torpilleur = 3;
-	int torpilleur = 4;			
 			}
 		}
 	}
 	
-	
-	
-	
-	
-	return porte_avion+croiseur+contre_torpilleur+torpilleur ;
+	if(porte_avion+croiseur+contre_torpilleur+torpilleur!=0){printf("Bateau manquants\n");return 0;}
+	return 1 ;
 }
 
-void remplir(grille g,int n)
+int remplir_grille(grille g,int n)
 {
 	FILE* fichier = ouvrir_fichier();
 	int i,j;
-	int estRempli = 0;
 	char findechaine = fgetc(fichier);
 	
-	while(!estRempli)
+	printf("On rempli la grille\n");
+	while(findechaine!='f')
 	{
-		printf("On rempli la grille");
-		while(findechaine!=EOF)
+		if(findechaine=='(')
 		{
-			if(findechaine=='(')
-			{
-				fscanf(fichier,"%d",&i);//Lire i
-			    findechaine = fgetc(fichier);//on lit ;
-			    if(findechaine==';')
-				{ 
-					fscanf(fichier,"%d",&j);//Lire j
-					findechaine = fgetc(fichier);//Lire (
-				}
-				else{printf("Le fichier est mal formé :(i1,j1)...(ik,jk)");}
-			 }
-			 else
-			 {printf("Le fichier est mal formé :(i1,j1)...(ik,jk)");}
-			 if(g[i][j] == COLORIER)
-			 {
-				 printf("Des bateaux se supperposent. Vous devez changer de fichier");
-				 break;
-			 }
-			 else{g[i][j] = COLORIER;}
-		}
-		if(complet(n)){estRempli = 1;}
+			fscanf(fichier,"%d",&i);//Lire i
+			findechaine = fgetc(fichier);//Lire ;
+			if(findechaine==';')
+			{ 
+				fscanf(fichier,"%d",&j);//Lire j
+				findechaine = fgetc(fichier);//Lire )
+			}
+			else{printf("Le fichier est mal formé :(i1,j1)...(ik,jk)");break;}
+		 }
+		 else
+		 {printf("Le fichier est mal formé :(i1,j1)...(ik,jk)");break;}
+		 findechaine = fgetc(fichier);//Lire ( ou EOF
+		 if(g[i][j] == COLORIER)
+		 {
+			 printf("Des bateaux se supperposent. Vous devez changer de fichier");
+			 break;
+		 }
+		 else{g[i][j] = COLORIER;}
 	}
+	fclose(fichier);
+	return complet(g,n);
 }
 
 void initialiser_grillle(grille g, int n)
@@ -135,6 +143,4 @@ void initialiser_grillle(grille g, int n)
 	}
 		
 }
-
-
 
