@@ -15,6 +15,8 @@
 #define COLORIER 'N'
 #define BLANC 'B'
 #define RATEE 'X'
+#define COULE 'C'
+#define TOUCHER 'T'
 
 typedef char** grille;
 
