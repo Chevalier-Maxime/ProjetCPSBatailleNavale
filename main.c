@@ -14,15 +14,10 @@
 #include <stdlib.h>
 #endif /* STDLIB_H  */
 
-#ifndef STRUCTUREDONNEE_H
-#define STRUCTUREDONNEE_H
-#include "structureDonnee.h"
-#endif /* STRUCTUREDONNEE_H  */
 
-#ifndef 
-#define STRUCTUREDONNEE_H
 #include "structureDonnee.h"
-#endif /* STRUCTUREDONNEE_H  */
+#include "affichage.h"
+#include "remplir.h"
 
 int main(int argc, char **argv)
 {
@@ -51,7 +46,7 @@ int main(int argc, char **argv)
 	 }
 	 
 	 //On rempli G
-	 remplir_grille(G, taille);
+	 remplir(G, taille);
 	
 	//alloue la grille du joueur 2
 	grille GC = (char **)malloc(taille * sizeof(char *));
@@ -60,10 +55,10 @@ int main(int argc, char **argv)
 	 }
 	 
 	//On initialise G2 pour le jeu
-	initialiser_grille(G, taille);
+	initialiser_grillle(G, taille);
 	
 	//afficher les grilles 
-	
+	affiche_jeu(G, taille);
 	return 0;
 }
 
