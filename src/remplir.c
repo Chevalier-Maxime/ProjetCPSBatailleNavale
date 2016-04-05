@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "structureDonnee.h"
 
+
 #define TAILLE_NOM_FICHIER 256
 
 
@@ -132,7 +133,7 @@ int remplir_grille(grille g,int n)
 	return complet(g,n);
 }
 
-void initialiser_grillle(grille g, int n)
+void initialiser_grille(grille g, int n)
 {
 	
 	int i,j;

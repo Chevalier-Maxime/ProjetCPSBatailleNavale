@@ -14,10 +14,10 @@
 #include <stdlib.h>
 #endif /* STDLIB_H  */
 
-
 #include "structureDonnee.h"
 #include "affichage.h"
 #include "remplir.h"
+#include "jouer.h"
 
 int main(int argc, char **argv)
 {
@@ -55,7 +55,7 @@ int main(int argc, char **argv)
 	 }
 	 
 	//On initialise G2 pour le jeu
-	initialiser_grillle(G, taille);
+	initialiser_grille(G, taille);
 	
 	//afficher les grilles 
 	affiche_jeu(G, taille);

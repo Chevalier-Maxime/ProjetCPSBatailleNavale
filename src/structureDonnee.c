@@ -1,6 +1,7 @@
-#include "structureDonnee.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "structureDonnee.h"
+
 
 
 liste_navires * liste_vide()

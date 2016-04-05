@@ -1,3 +1,7 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "structureDonnee.h"
+
 
 void affiche_jeu (grille g, int taille)
 {
