@@ -9,10 +9,13 @@
 FILE* ouvrir_fichier()
 {
 	char nomFichier[TAILLE_NOM_FICHIER];
-
+	FILE* fichier;
 	printf("Quel est votre nom de fichier?");
 	scanf("%s",nomFichier);
-	return fopen(nomFichier,"r");
+	fichier = fopen(nomFichier,"r");
+	if(fichier == NULL){return exit(0);}
+	else{return fichier;}
+	
 }
 /*1 si ok ; 0 sinon*/
 int complet(grille g,int n)
