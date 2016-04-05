@@ -13,22 +13,23 @@ void affiche_jeu (grille g, int taille)
 	{
 		printf("  %d",i);
 	}
-	printf("\n");
+	printf("\n ");
 	
 	for(i=0;i<taille;i++)
 	{
-		printf("%d  ",i);
-		for(j=0;i<taille;j++)
+		printf("%d",i);
+		for(j=0;j<taille;j++)
 		{
-			if((g[i][j]==BLANC)||(g[i][j]==RATEE))
-			{
-				printf("   ");
-			}
-			else
+			if((g[i][j]==COLORIER))
 			{
 				printf("  N");
 			}
+			else
+			{
+				printf("   ");
+			}
 		}
+		printf("\n ");
 	}
 	
 }
@@ -47,11 +48,19 @@ void affiche_etat_coules(grille g, int taille)
 	
 	for(i=0;i<taille;i++)
 	{
-		printf("%d  ",i);
-		for(j=0;i<taille;j++)
+		printf(" %d",i);
+		for(j=0;j<taille;j++)
 		{
-			printf("  %c", g[i][j]);
+			if(g[i][j]!=BLANC)
+			{
+				printf("  %c", g[i][j]);
+			}
+			else
+			{
+				printf("   ");
+			}
 		}
+		printf("\n");
 	}
 	
 }

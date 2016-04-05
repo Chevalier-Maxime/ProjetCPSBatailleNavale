@@ -6,12 +6,7 @@
 
 
 #include <stdio.h>
-
-
-
 #include <stdlib.h>
-
-
 #include "structureDonnee.h"
 #include "affichage.h"
 #include "remplir.h"
@@ -45,7 +40,10 @@ int main(int argc, char **argv)
 	 
 	 //On rempli G
 	 remplir_grille(G, taille);
-	
+	 affiche_jeu(G, taille);
+	 
+	 liste_navires * l = cree_liste_navires(G, taille);
+	 
 	//alloue la grille du joueur 2
 	grille GC = (char **)malloc(taille * sizeof(char *));
     for (i=0; i<taille; i++){
@@ -56,7 +54,9 @@ int main(int argc, char **argv)
 	initialiser_grille(GC, taille);
 	
 	//afficher les grilles 
-	affiche_jeu(GC, taille);
+	affiche_etat_coules(GC, taille);
+	
+	joue(G, GC, taille , *l , taille, taille);
 	return 0;
 }
 

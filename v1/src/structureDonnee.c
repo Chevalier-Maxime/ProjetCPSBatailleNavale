@@ -31,8 +31,7 @@ void insertion (maillon * m, liste_navires * l)
 	}
 	else
 	{
-		maillon * temp = l->fin;
-		temp->suivant = m;
+		l->fin->suivant=m;
 		l->fin = m;
 	}
 }
@@ -51,36 +50,38 @@ liste_navires * cree_liste_navires(grille g, int n)
 		}
 	}
 	
+	
 	for(i = 0; i<n;i++)
 	{
 		for(j=0;j<n;j++)
 		{
-			if(g[i][j]!=BLANC)
+			if(g[i][j]==COLORIER)
 			{
 				//on regarde si on a deja traité cette partie
 				if(tabGrille[i][j]==0)
 				{
 					//On regarde sur la ligne
-					if((j<n-1)&&(g[i][j+1]!=BLANC))
+					if((j<n-1)&&(g[i][j+1]==COLORIER))
 					{
 						tabGrille[i][j] = 1;
 						jt=j+1;
 						//On cherche sur la ligne ou s'arrete le bateau
-						while(g[i][jt]!=BLANC)
+						while(g[i][jt]==COLORIER)
 						{
 							tabGrille[i][jt] = 1;
 							jt++;
 						}
+						
 						m = nouveau(i,i,j,jt-1);
 						insertion(m,l);
 					}
 					else{
 						//on regarle la colonne
-						if((i<n-1)&&(g[i+1][j]!=BLANC))
+						if((i<n-1)&&(g[i+1][j]==COLORIER))
 						{
 							tabGrille[i][j] = 1;
 							it = i+1;
-							while(g[it][j]!=BLANC)
+							while(g[it][j]==COLORIER)
 							{
 								tabGrille[it][j] = 1;
 								it++;

@@ -1,2 +1,0 @@
-# ProjetCPSBatailleNavale
-Projet RICM3
