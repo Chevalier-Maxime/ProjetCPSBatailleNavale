@@ -24,7 +24,7 @@ int navire_coule(maillon *m, int ic, int jc, grille gc)
 			{
 				for(j = m->j_deb; j < m->j_fin+1; j++)
 				{
-					gc[i][j]==COULE;//afficher sur la grille
+					gc[i][j]=COULE;//afficher sur la grille
 					m->coule = 1;//afficher dans chainon
 				}
 			}

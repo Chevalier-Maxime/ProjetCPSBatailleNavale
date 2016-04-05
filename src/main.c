@@ -51,14 +51,14 @@ int main(int argc, char **argv)
 	//alloue la grille du joueur 2
 	grille GC = (char **)malloc(taille * sizeof(char *));
     for (i=0; i<taille; i++){
-		 G[i] = (char *)malloc(taille * sizeof(char));
+		 GC[i] = (char *)malloc(taille * sizeof(char));
 	 }
 	 
 	//On initialise G2 pour le jeu
-	initialiser_grille(G, taille);
+	initialiser_grille(GC, taille);
 	
 	//afficher les grilles 
-	affiche_jeu(G, taille);
+	affiche_jeu(GC, taille);
 	return 0;
 }
 

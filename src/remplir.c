@@ -140,7 +140,7 @@ void initialiser_grille(grille g, int n)
 	for(i=0;i<n;i++)
 	{
 		for(j=0;j<n;j++)
-			g[i][j]=BLANC;
+		{	g[i][j]=BLANC;}
 	}
 		
 }
