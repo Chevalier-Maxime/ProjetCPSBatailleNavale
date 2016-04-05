@@ -16,7 +16,7 @@ int main(int argc, char **argv)
 {
 	if(argc != 2)
 	{
-		fprintf(stderr,"Le programme doit etre execute de la facon suivante : batailleNavale tailleGrille\nPar exemple, vous pouvez taper batailleNavale 10\n");
+		fprintf(stderr,"Le programme doit etre execute de la facon suivante : BatailleNavale tailleGrille\nPar exemple, vous pouvez taper BatailleNavale 10\n");
 		return 1;
 	}
 	
@@ -40,18 +40,9 @@ int main(int argc, char **argv)
 	 
 	 //On rempli G
 	 remplir_grille(G, taille);
-	 affiche_jeu(G, taille);
+	 //affiche_jeu(G, taille);
 	 
 	 liste_navires * l = cree_liste_navires(G, taille);
-	 maillon *m = l->debut;
-	 for(i=0;i<10;i++)
-	 {
-		 if(m->suivant==NULL)
-		 {
-			 printf("blop");
-		 }
-		 m=m->suivant;
-	 }
 	 
 	//alloue la grille du joueur 2
 	grille GC = (char **)malloc(taille * sizeof(char *));
@@ -63,7 +54,7 @@ int main(int argc, char **argv)
 	initialiser_grille(GC, taille);
 	
 	//afficher les grilles 
-	affiche_etat_coules(GC, taille);
+	//affiche_etat_coules(GC, taille);
 	
 	joue(G, GC, taille , *l , taille, taille);
 	return 0;

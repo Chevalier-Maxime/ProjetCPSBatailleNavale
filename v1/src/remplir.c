@@ -10,11 +10,34 @@ FILE* ouvrir_fichier()
 {
 	char nomFichier[TAILLE_NOM_FICHIER];
 	FILE* fichier;
-	printf("Quel est votre nom de fichier?  ");
-	scanf("%s",nomFichier);
-	fichier = fopen(nomFichier,"r");
-	if(fichier == NULL){exit(0);}
-	else{return fichier;}
+	//~ printf("Quel est votre nom de fichier?  ");
+	//~ scanf("%s",nomFichier);
+	//~ fichier = fopen(nomFichier,"r");
+	//~ if(fichier == NULL)
+	//~ {
+		//~ fprintf(stderr,"Ce fichier n'existe pas, pensez inclure l'extention si le fichier en possède une.\nPar exemple, tapez nomFichier.txt");
+		//~ exit(0);
+	//~ }
+	//~ else{
+		//~ return fichier;
+	//~ }
+	int dejaPasse = 0;
+	int retester = 0;
+	do{
+		if(dejaPasse)
+		{
+			fprintf(stderr,"Ce fichier n'existe pas, pensez inclure l'extention si le fichier en possède une.\nPar exemple, tapez nomFichier.txt\n");
+			printf("Essayer un autre fichier ? (1 = oui, 0 = non) ->  ");
+			scanf("%d",&retester);
+			if(!retester)
+				{exit(0);}
+		}
+		printf("Quel est votre nom de fichier?  ");
+		scanf("%s",nomFichier);
+		fichier = fopen(nomFichier,"r");
+		dejaPasse = 1;
+	}while(fichier == NULL);
+	return fichier;
 }
 /*1 si ok ; 0 sinon*/
 int complet(grille g,int n)
@@ -111,8 +134,6 @@ int remplir_grille(grille g,int n)
 	if(j == n)
 	{
 		findechaine = fgetc(fichier);
-		printf("On rempli la grille\n");
-		
 		while(findechaine!='f')
 		{
 			if(findechaine=='(')

@@ -48,6 +48,8 @@ int un_navire_coule(liste_navires l, int ic, int jc, grille gc)
 		}
 		m = m->suivant;
 	}
+	printf("Raté!\n");
+	gc[ic][jc] = RATEE;
 	return 0;
 }
 
@@ -56,7 +58,7 @@ int jeu_fini(liste_navires l)
 	maillon *m = l.debut;
 	while(m!=NULL)
 	{
-		if(m->coule==0){printf("Le jeu n'est pas fini\n");return 0;}
+		if(m->coule==0){return 0;}
 		m = m->suivant;
 	}
 	return 1;
@@ -64,12 +66,11 @@ int jeu_fini(liste_navires l)
 
 void joue(grille g, grille gc, int n , liste_navires l , int i, int j)
 {
-	printf("joue\n");
 	int ic = -1;
 	int jc = -1;
+	int nbcoup =0;
 	while(!jeu_fini(l))
 	{
-		printf("le jeu n'est pas fini\n");
 		jc=-1;
 		ic=-1;
 		affiche_etat_coules(gc,n);
@@ -79,9 +80,10 @@ void joue(grille g, grille gc, int n , liste_navires l , int i, int j)
 			scanf("%d %d", &ic, &jc);
 			
 		}
-		printf("blop");
-		un_navire_coule(l, ic, jc, gc);		
+		un_navire_coule(l, ic, jc, gc);
+		nbcoup ++;		
 	}
+	printf("\n\n Vous avez gagné !!\n La partie à durée %d coups\n",nbcoup);
 }
 
 
