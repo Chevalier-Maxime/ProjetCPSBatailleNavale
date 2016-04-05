@@ -9,10 +9,12 @@
 FILE* ouvrir_fichier()
 {
 	char nomFichier[TAILLE_NOM_FICHIER];
-
-	printf("Quel est votre nom de fichier?");
+	FILE* fichier;
+	printf("Quel est votre nom de fichier?  ");
 	scanf("%s",nomFichier);
-	return fopen(nomFichier,"r");
+	fichier = fopen(nomFichier,"r");
+	if(fichier == NULL){exit(0);}
+	else{return fichier;}
 }
 /*1 si ok ; 0 sinon*/
 int complet(grille g,int n)
@@ -103,34 +105,42 @@ int remplir_grille(grille g,int n)
 {
 	FILE* fichier = ouvrir_fichier();
 	int i,j;
-	char findechaine = fgetc(fichier);
+	char findechaine;
 	
-	printf("On rempli la grille\n");
-	while(findechaine!='f')
+	fscanf(fichier, "%d", &j);
+	if(j == n)
 	{
-		if(findechaine=='(')
+		findechaine = fgetc(fichier);
+		printf("On rempli la grille\n");
+		
+		while(findechaine!='f')
 		{
-			fscanf(fichier,"%d",&i);//Lire i
-			findechaine = fgetc(fichier);//Lire ;
-			if(findechaine==';')
-			{ 
-				fscanf(fichier,"%d",&j);//Lire j
-				findechaine = fgetc(fichier);//Lire )
-			}
-			else{printf("Le fichier est mal formé :(i1,j1)...(ik,jk)");break;}
-		 }
-		 else
-		 {printf("Le fichier est mal formé :(i1,j1)...(ik,jk)");break;}
-		 findechaine = fgetc(fichier);//Lire ( ou EOF
-		 if(g[i][j] == COLORIER)
-		 {
-			 printf("Des bateaux se supperposent. Vous devez changer de fichier");
-			 break;
-		 }
-		 else{g[i][j] = COLORIER;}
+			if(findechaine=='(')
+			{
+				fscanf(fichier,"%d",&i);//Lire i
+				findechaine = fgetc(fichier);//Lire ;
+				if(findechaine==';')
+				{ 
+					fscanf(fichier,"%d",&j);//Lire j
+					findechaine = fgetc(fichier);//Lire )
+				}
+				else{printf("Le fichier est mal formé :(i1,j1)...(ik,jk)");break;}
+			 }
+			 else
+			 {printf("Le fichier est mal formé :(i1,j1)...(ik,jk)");break;}
+			 findechaine = fgetc(fichier);//Lire ( ou EOF
+			 if(g[i][j] == COLORIER)
+			 {
+				 printf("Des bateaux se supperposent. Vous devez changer de fichier");
+				 break;
+			 }
+			 else{g[i][j] = COLORIER;}
+		}
+		fclose(fichier);
+		return complet(g,n);
 	}
-	fclose(fichier);
-	return complet(g,n);
+	else
+	{printf("Le fichier ne correspond pas à ce type de grille\n");exit(0);}	
 }
 
 void initialiser_grille(grille g, int n)
@@ -144,4 +154,3 @@ void initialiser_grille(grille g, int n)
 	}
 		
 }
-

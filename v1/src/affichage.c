@@ -61,7 +61,6 @@ void affiche_etat_coules(grille g, int taille)
 			}
 		}
 		printf("\n");
-	}
-	
+	}	
 }
 

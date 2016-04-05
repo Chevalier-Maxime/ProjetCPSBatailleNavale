@@ -43,6 +43,15 @@ int main(int argc, char **argv)
 	 affiche_jeu(G, taille);
 	 
 	 liste_navires * l = cree_liste_navires(G, taille);
+	 maillon *m = l->debut;
+	 for(i=0;i<10;i++)
+	 {
+		 if(m->suivant==NULL)
+		 {
+			 printf("blop");
+		 }
+		 m=m->suivant;
+	 }
 	 
 	//alloue la grille du joueur 2
 	grille GC = (char **)malloc(taille * sizeof(char *));

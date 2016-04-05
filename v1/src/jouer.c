@@ -6,30 +6,28 @@
 
 int navire_coule(maillon *m, int ic, int jc, grille gc)
 {
+	printf("Un navire touché\n");
 	int i, j;
-	gc[ic][jc] = TOUCHER;
-	int couler = 1;
 	
-	for(i = m->i_deb; i < m->i_fin+1; i++)
+	gc[ic][jc] = TOUCHER;	
+	
+	for(i = m->i_deb; i <=m->i_fin; i++)
 	{
-		for(j = m->j_deb; j < m->j_fin+1; j++)
+		for(j = m->j_deb; j <=m->j_fin; j++)
 		{
-			couler = couler & (gc[i][j]==TOUCHER);
+			if(gc[i][j]!=TOUCHER){return 0;}
 		}
 	}
-	if(couler)//si coulé
+	printf("Coulé!\n");
+	for(i = m->i_deb; i <=m->i_fin; i++)
 	{
-			printf("Coulé!");
-			for(i = m->i_deb; i < m->i_fin+1; i++)
-			{
-				for(j = m->j_deb; j < m->j_fin+1; j++)
-				{
-					gc[i][j]=COULE;//afficher sur la grille
-					m->coule = 1;//afficher dans chainon
-				}
-			}
+		for(j = m->j_deb; j <=m->j_fin; j++)
+		{
+			gc[i][j]=COULE;//afficher sur la grille
+			m->coule = 1;//afficher dans chainon
+		}
 	}
-	return couler;
+	return 1;
 }
 
 int un_navire_coule(liste_navires l, int ic, int jc, grille gc)
@@ -43,7 +41,7 @@ int un_navire_coule(liste_navires l, int ic, int jc, grille gc)
 			{
 				if((jc>=m->j_deb)&&(jc<=m->j_fin))
 				{
-					printf("Touché!");
+					printf("Touché!\n");
 					return navire_coule(m, ic, jc, gc);
 				}
 			}
@@ -56,29 +54,34 @@ int un_navire_coule(liste_navires l, int ic, int jc, grille gc)
 int jeu_fini(liste_navires l)
 {
 	maillon *m = l.debut;
-	int fini = 1;
 	while(m!=NULL)
 	{
-		fini = fini & (m->coule);
+		if(m->coule==0){printf("Le jeu n'est pas fini\n");return 0;}
 		m = m->suivant;
 	}
-	return fini;
+	return 1;
 }
 
 void joue(grille g, grille gc, int n , liste_navires l , int i, int j)
 {
+	printf("joue\n");
 	int ic = -1;
 	int jc = -1;
-	while(!jeu_fini(l));
+	while(!jeu_fini(l))
 	{
-		affiche_etat_coules(gc,i);
-		while((ic<0)&&(jc<0)&&(ic>i)&&(jc>j))
+		printf("le jeu n'est pas fini\n");
+		jc=-1;
+		ic=-1;
+		affiche_etat_coules(gc,n);
+		while(((ic<0)||(ic>n))||((jc<0)||(jc>n)))
 		{
-			printf("Choisir les coordonées i et j compris en tre 0 et %d : ",i);
-			scanf("%d %d", &ic , &jc);
+			printf("Choisir les coordonées i et j compris entre 0 et %d : \n",n);
+			scanf("%d %d", &ic, &jc);
+			
 		}
+		printf("blop");
 		un_navire_coule(l, ic, jc, gc);		
-	}	
+	}
 }
 
 
