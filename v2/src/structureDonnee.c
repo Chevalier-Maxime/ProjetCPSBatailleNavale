@@ -3,6 +3,48 @@
 #include "structureDonnee.h"
 
 
+void set_field(maillon *m, int v, int p_faible, int p_fort)
+{
+	int val  = m->maille	;
+	
+	if((FAIBLE_I_DEB==p_faible)&&(FORT_I_DEB==p_fort))
+	{val = (val&(~MASK_I_DEB)) + (v<<OFFSET_I_DEB); }
+	
+	else if((FAIBLE_I_FIN==p_faible)&&(FORT_I_FIN==p_fort))
+	{val = (val&(~MASK_I_FIN)) + (v<<OFFSET_I_FIN);}
+	
+	else if((FAIBLE_J_DEB==p_faible)&&(FORT_J_DEB==p_fort))
+	{val = (val&(~MASK_J_DEB)) + (v<<OFFSET_J_DEB);}
+	
+	else if((FAIBLE_J_FIN==p_faible)&&(FORT_J_FIN==p_fort))
+	{val = (val&(~MASK_J_FIN)) + (v<<OFFSET_J_FIN);}
+	
+	else if((FAIBLE_COULE==p_faible)&&(FORT_COULE==p_fort))
+	{val = (val&(~MASK_COULE)) + (v<<OFFSET_COULE);}
+}
+
+int get_field(maillon *m, int p_faible, int p_fort)
+{
+	int val  = m->maille;
+	
+	if((FAIBLE_I_DEB==p_faible)&&(FORT_I_DEB==p_fort))
+	{return (val&MASK_I_DEB)>>OFFSET_I_DEB; }
+	
+	else if((FAIBLE_I_FIN==p_faible)&&(FORT_I_FIN==p_fort))
+	{return (val&MASK_I_FIN)>>OFFSET_I_FIN;}
+	
+	else if((FAIBLE_J_DEB==p_faible)&&(FORT_J_DEB==p_fort))
+	{return (val&MASK_J_DEB)>>OFFSET_J_DEB;}
+	
+	else if((FAIBLE_J_FIN==p_faible)&&(FORT_J_FIN==p_fort))
+	{return (val&MASK_J_FIN)>>OFFSET_J_FIN;}
+	
+	else if((FAIBLE_COULE==p_faible)&&(FORT_COULE==p_fort))
+	{return (val&MASK_COULE)>>OFFSET_COULE;}	
+	
+	else{printf("ERREUR\n"); exit(0);}
+	
+}
 
 liste_navires * liste_vide()
 {
@@ -15,12 +57,13 @@ liste_navires * liste_vide()
 maillon * nouveau(int ideb,int ifin, int jdeb, int jfin)
 {
 	maillon * m = malloc(sizeof(maillon));
-	m->i_deb = ideb;
-	m->i_fin = ifin;
-	m->j_deb = jdeb;
-	m->j_fin = jfin;
-	m->coule = 0;
+	set_field(m, ideb, FAIBLE_I_DEB, FORT_I_DEB);
+	set_field(m, ifin, FAIBLE_I_FIN, FORT_I_FIN);
+	set_field(m, jdeb, FAIBLE_J_DEB, FORT_J_DEB);
+	set_field(m, jfin, FAIBLE_J_FIN, FORT_J_FIN);
+	set_field(m, 0, FAIBLE_COULE, FORT_COULE);
 	m->suivant = NULL;
+	printf("Le maillon vaut : %d\n",m->maille);
 	return m;
 }
 
@@ -91,10 +134,6 @@ liste_navires * cree_liste_navires(grille g, int n)
 							m = nouveau(i,it-1,j,j);
 							insertion(m,l);
 						}
-						else
-						{
-							//erreur, un bateau ne peut pas faire une seule case
-						}
 					}
 				}
 			}
@@ -103,42 +142,3 @@ liste_navires * cree_liste_navires(grille g, int n)
 	return l;
 }
 
-void set_field(int *m, int v, int p_faible, int p_fort)
-{
-	int val  = *m;
-	
-	if((FAIBLE_I_DEB==p_faible)&&(FORT_I_DEB==p_fort))
-	{val = val&(~MASK_I_DEB) + (v<<OFFSET_I_DEB); }
-	
-	else if((FAIBLE_I_FIN==p_faible)&&(FORT_I_FIN==p_fort))
-	{val = val&(~MASK_I_FIN) + (v<<OFFSET_I_FIN);}
-	
-	else if((FAIBLE_J_DEB==p_faible)&&(FORT_J_DEB==p_fort))
-	{val = val&(~MASK_J_DEB) + (v<<OFFSET_J_DEB);}
-	
-	else if if((FAIBLE_J_FIN==p_faible)&&(FORT_J_FIN==p_fort))
-	{val = val&(~MASK_J_FIN) + (v<<OFFSET_J_FIN);}
-	
-	else if if((FAIBLE_COULE==p_faible)&&(FORT_COULE==p_fort))
-	{val = val&(~MASK_COULE) + (v<<OFFSET_COULE);}
-}
-
-int get_field(int *m, int p_faible, int p_fort)
-{
-	int val  = *m;
-	
-	if((FAIBLE_I_DEB==p_faible)&&(FORT_I_DEB==p_fort))
-	{return (val&MASK_I_DEB)>>OFFSET_I_DEB; }
-	
-	else if((FAIBLE_I_FIN==p_faible)&&(FORT_I_FIN==p_fort))
-	{val = (val&MASK_I_FIN)>>OFFSET_I_FIN;}
-	
-	else if((FAIBLE_J_DEB==p_faible)&&(FORT_J_DEB==p_fort))
-	{val = (val&MASK_J_DEB)>>OFFSET_J_DEB;}
-	
-	else if if((FAIBLE_J_FIN==p_faible)&&(FORT_J_FIN==p_fort))
-	{val = (val&MASK_J_FIN)>>OFFSET_J_FIN;}
-	
-	else if if((FAIBLE_COULE==p_faible)&&(FORT_COULE==p_fort))
-	{val = (val&MASK_COULE)>>OFFSET_COULE;}	
-}

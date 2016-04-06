@@ -44,7 +44,7 @@
 typedef char** grille;
 
 typedef struct maillon{
-	int maille;
+	int_32 maille;
 	struct maillon * suivant;
 }maillon;
 
@@ -54,12 +54,15 @@ typedef struct liste_navires{
 }liste_navires;
 
 liste_navires * liste_vide();
+
 maillon * nouveau(int ideb,int ifin, int jdeb, int jfin);
+
 void insertion (maillon * m, liste_navires * l);
 
 liste_navires * cree_liste_navires(grille g, int n);
 
-void set_field(int *m, int p_faible, int p_fort);
-int get_field(int *m, int p_faible, int p_fort);
+void set_field(maillon *m, int_32 v, int p_faible, int p_fort);
+
+int get_field(maillon *m, int p_faible, int p_fort);
 
 #endif

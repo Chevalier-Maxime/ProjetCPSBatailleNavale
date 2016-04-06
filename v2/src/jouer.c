@@ -23,7 +23,7 @@ int navire_coule(maillon *m, int ic, int jc, grille gc)
 		for(j = get_field(m,FAIBLE_J_DEB,FORT_J_DEB); j <=get_field(m,FAIBLE_J_FIN,FORT_J_FIN); j++)
 		{
 			gc[i][j]=COULE;//afficher sur la grille
-			set_field(m,1,FAIBLE_COULE,FORT_COULE)//afficher dans chainon
+			set_field(m,1,FAIBLE_COULE,FORT_COULE);//afficher dans chainon
 		}
 	}
 	return 1;
@@ -36,7 +36,7 @@ int un_navire_coule(liste_navires l, int ic, int jc, grille gc)
 	{
 		if(get_field(m,FAIBLE_COULE,FORT_COULE)!=1)//si pas coulé
 		{
-			if((ic>=get_field(m,FAIBLE_I_DEB,FORT_I_DEB))&&(ic<=get_field(m,FAIBLE_I_FIN,FORT_I_FIN))
+			if((ic>=get_field(m,FAIBLE_I_DEB,FORT_I_DEB))&&(ic<=get_field(m,FAIBLE_I_FIN,FORT_I_FIN)))
 			{
 				if((jc>=get_field(m,FAIBLE_J_DEB,FORT_J_DEB))&&(jc<=get_field(m,FAIBLE_J_FIN,FORT_J_FIN)))
 				{
