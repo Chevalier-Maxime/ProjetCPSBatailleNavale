@@ -6,7 +6,6 @@
 
 int navire_coule(maillon *m, int ic, int jc, grille gc)
 {
-	printf("Un navire touché\n");
 	int i, j;
 	
 	gc[ic][jc] = TOUCHER;	

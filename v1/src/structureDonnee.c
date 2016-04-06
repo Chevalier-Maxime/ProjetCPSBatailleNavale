@@ -89,10 +89,6 @@ liste_navires * cree_liste_navires(grille g, int n)
 							m = nouveau(i,it-1,j,j);
 							insertion(m,l);
 						}
-						else
-						{
-							//erreur, un bateau ne peut pas faire une seule case
-						}
 					}
 				}
 			}

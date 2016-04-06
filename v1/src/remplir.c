@@ -10,17 +10,6 @@ FILE* ouvrir_fichier()
 {
 	char nomFichier[TAILLE_NOM_FICHIER];
 	FILE* fichier;
-	//~ printf("Quel est votre nom de fichier?  ");
-	//~ scanf("%s",nomFichier);
-	//~ fichier = fopen(nomFichier,"r");
-	//~ if(fichier == NULL)
-	//~ {
-		//~ fprintf(stderr,"Ce fichier n'existe pas, pensez inclure l'extention si le fichier en possède une.\nPar exemple, tapez nomFichier.txt");
-		//~ exit(0);
-	//~ }
-	//~ else{
-		//~ return fichier;
-	//~ }
 	int dejaPasse = 0;
 	int retester = 0;
 	do{
