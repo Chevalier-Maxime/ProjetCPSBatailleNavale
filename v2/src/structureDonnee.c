@@ -148,6 +148,7 @@ void set_field(int *m, int v, int p_faible, int p_fort)
 		mask = (mask<<1)|1;
 	}
 	mask=mask<<p_faible; //On positionne le masque au bon endroit
+	*m = (*m)&(~mask); //On efface le champ à modifier
 	*m = (*m)|((v<<p_faible)&mask); // on decale v à la position ou il doit etre, on le tronque avec un masque si v est trop grand, et on le met dans le maillon
 }
 

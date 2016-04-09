@@ -16,26 +16,29 @@ int navire_coule(maillon *m, int ic, int jc, grille gc)
 {
 	int i, j;
 	
-	//On modifie la grille du joueur 2 pour dire que le bateau est touché
-	gc[ic][jc] = TOUCHER;	
-	
-	//On test le bateau courant est touché sur toutes ses cases
-	for(i = get_ideb((&m->maille)); i <=get_ifin((&m->maille)); i++)
+	if(gc[ic][jc] != COULE)
 	{
-		for(j = get_jdeb((&m->maille)); j <=get_jfin((&m->maille)); j++)
+		//On modifie la grille du joueur 2 pour dire que le bateau est touché
+		gc[ic][jc] = TOUCHER;	
+		
+		//On test le bateau courant est touché sur toutes ses cases
+		for(i = get_ideb((&m->maille)); i <=get_ifin((&m->maille)); i++)
 		{
-			if(gc[i][j]!=TOUCHER){return 0;}
+			for(j = get_jdeb((&m->maille)); j <=get_jfin((&m->maille)); j++)
+			{
+				if(gc[i][j]!=TOUCHER){return 0;}
+			}
 		}
-	}
-	//Si oui, on dit a l'utilisateur que le bateau est coulé et on modifie la grille
-	//pour mettre toutes les cases à coulé
-	printf("Coulé!\n");
-	for(i = get_ideb((&m->maille)); i <=get_ifin((&m->maille)); i++)
-	{
-		for(j = get_jdeb((&m->maille)); j <=get_jfin((&m->maille)); j++)
+		//Si oui, on dit a l'utilisateur que le bateau est coulé et on modifie la grille
+		//pour mettre toutes les cases à coulé
+		printf("Coulé!\n");
+		for(i = get_ideb((&m->maille)); i <=get_ifin((&m->maille)); i++)
 		{
-			gc[i][j]=COULE;//afficher sur la grille
-			set_coule((&m->maille),1);//afficher dans chainon
+			for(j = get_jdeb((&m->maille)); j <=get_jfin((&m->maille)); j++)
+			{
+				gc[i][j]=COULE;//afficher sur la grille
+				set_coule((&m->maille),1);//afficher dans chainon
+			}
 		}
 	}
 	return 1;
