@@ -40,8 +40,9 @@ int main(int argc, char **argv)
 	 
 	 //On rempli G
 	 remplir_grille(G, taille);
-	 affiche_jeu(G, taille);
-	 printf("\n\n\n\n\n\n\n\n\n\n\n\n\n");
+	 //~ affiche_jeu(G, taille);
+	 //~ printf("\n\n\n\n\n\n\n\n\n\n\n\n\n");
+	 printf("blop");
 	 
 	 liste_navires * l = cree_liste_navires(G, taille);
 	 

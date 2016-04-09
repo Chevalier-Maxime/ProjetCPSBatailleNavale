@@ -134,14 +134,15 @@ int remplir_grille(grille g,int n)
 					fscanf(fichier,"%d",&j);//Lire j
 					findechaine = fgetc(fichier);//Lire )
 				}
-				else{printf("Le fichier est mal formé :(i1,j1)...(ik,jk)");break;}
+				else{printf("Le fichier est mal formé :(i1,j1)...(ik,jk)\n");exit(0);}
 			 }
 			 else
-			 {printf("Le fichier est mal formé :(i1,j1)...(ik,jk)");break;}
+			 {printf("Le fichier est mal formé :(i1,j1)...(ik,jk)\n");exit(0);}
 			 findechaine = fgetc(fichier);//Lire ( ou EOF
 			 if(g[i][j] == COLORIER)
 			 {
-				 printf("Des bateaux se supperposent. Vous devez changer de fichier");
+				 printf("Des bateaux se supperposent. Vous devez changer de fichier\n");
+				 exit(0);
 				 break;
 			 }
 			 else{g[i][j] = COLORIER;}

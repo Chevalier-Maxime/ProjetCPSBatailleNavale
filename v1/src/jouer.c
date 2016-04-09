@@ -68,16 +68,33 @@ void joue(grille g, grille gc, int n , liste_navires l , int i, int j)
 	int ic = -1;
 	int jc = -1;
 	int nbcoup =0;
+	int s;
+	int c;
+	printf("\nn = %d\n", n);
 	while(!jeu_fini(l))
 	{
 		jc=-1;
 		ic=-1;
 		affiche_etat_coules(gc,n);
-		while(((ic<0)||(ic>n))||((jc<0)||(jc>n)))
+		while(((ic<0)||(ic>=n))||((jc<0)||(jc>=n)))
 		{
 			printf("Choisir les coordonées i et j compris entre 0 et %d : \n",n);
-			scanf("%d %d", &ic, &jc);
-			
+			s = scanf("%d %d%*[^\n]", &ic, &jc);
+			if(s != 2)
+			{
+				while ( ((c = getchar()) != '\n') && c != EOF);
+				printf("Ca n'est pas un nombre valide\n");
+			}
+			else
+			{
+				/* reussite de la saisie */
+				getchar(); /* on enleve le '\n' restant */
+				printf("i %d, j %d\n", ic, jc);
+			}
+			if (((ic<0)||(ic>=n))||((jc<0)||(jc>=n)))
+			{
+				printf("Veuillez entrer des coordonnées entre %d et %d\n", 0, n-1);
+			}
 		}
 		un_navire_coule(l, ic, jc, gc);
 		nbcoup ++;		
