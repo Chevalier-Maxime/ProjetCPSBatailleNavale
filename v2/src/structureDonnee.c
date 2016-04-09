@@ -3,48 +3,6 @@
 #include "structureDonnee.h"
 
 
-void set_field(maillon *m, int v, int p_faible, int p_fort)
-{
-	int val  = m->maille	;
-	
-	if((FAIBLE_I_DEB==p_faible)&&(FORT_I_DEB==p_fort))
-	{val = (val&(~MASK_I_DEB)) + (v<<OFFSET_I_DEB); }
-	
-	else if((FAIBLE_I_FIN==p_faible)&&(FORT_I_FIN==p_fort))
-	{val = (val&(~MASK_I_FIN)) + (v<<OFFSET_I_FIN);}
-	
-	else if((FAIBLE_J_DEB==p_faible)&&(FORT_J_DEB==p_fort))
-	{val = (val&(~MASK_J_DEB)) + (v<<OFFSET_J_DEB);}
-	
-	else if((FAIBLE_J_FIN==p_faible)&&(FORT_J_FIN==p_fort))
-	{val = (val&(~MASK_J_FIN)) + (v<<OFFSET_J_FIN);}
-	
-	else if((FAIBLE_COULE==p_faible)&&(FORT_COULE==p_fort))
-	{val = (val&(~MASK_COULE)) + (v<<OFFSET_COULE);}
-}
-
-int get_field(maillon *m, int p_faible, int p_fort)
-{
-	int val  = m->maille;
-	
-	if((FAIBLE_I_DEB==p_faible)&&(FORT_I_DEB==p_fort))
-	{return (val&MASK_I_DEB)>>OFFSET_I_DEB; }
-	
-	else if((FAIBLE_I_FIN==p_faible)&&(FORT_I_FIN==p_fort))
-	{return (val&MASK_I_FIN)>>OFFSET_I_FIN;}
-	
-	else if((FAIBLE_J_DEB==p_faible)&&(FORT_J_DEB==p_fort))
-	{return (val&MASK_J_DEB)>>OFFSET_J_DEB;}
-	
-	else if((FAIBLE_J_FIN==p_faible)&&(FORT_J_FIN==p_fort))
-	{return (val&MASK_J_FIN)>>OFFSET_J_FIN;}
-	
-	else if((FAIBLE_COULE==p_faible)&&(FORT_COULE==p_fort))
-	{return (val&MASK_COULE)>>OFFSET_COULE;}	
-	
-	else{printf("ERREUR\n"); exit(0);}
-	
-}
 
 liste_navires * liste_vide()
 {
@@ -57,13 +15,16 @@ liste_navires * liste_vide()
 maillon * nouveau(int ideb,int ifin, int jdeb, int jfin)
 {
 	maillon * m = malloc(sizeof(maillon));
-	set_field(m, ideb, FAIBLE_I_DEB, FORT_I_DEB);
-	set_field(m, ifin, FAIBLE_I_FIN, FORT_I_FIN);
-	set_field(m, jdeb, FAIBLE_J_DEB, FORT_J_DEB);
-	set_field(m, jfin, FAIBLE_J_FIN, FORT_J_FIN);
-	set_field(m, 0, FAIBLE_COULE, FORT_COULE);
+	m->maille = 0;
+	int * b = &(m->maille);
+	
+	set_ideb(b,ideb);
+	set_ifin(b,ifin);
+	set_jdeb(b,jdeb);
+	set_jfin(b,jfin);
+	set_coule(b,0);
+	
 	m->suivant = NULL;
-	printf("Le maillon vaut : %d\n",m->maille);
 	return m;
 }
 
@@ -134,6 +95,10 @@ liste_navires * cree_liste_navires(grille g, int n)
 							m = nouveau(i,it-1,j,j);
 							insertion(m,l);
 						}
+						else
+						{
+							//erreur, un bateau ne peut pas faire une seule case
+						}
 					}
 				}
 			}
@@ -142,3 +107,70 @@ liste_navires * cree_liste_navires(grille g, int n)
 	return l;
 }
 
+void set_field(int *m, int v, int p_faible, int p_fort)
+{
+	int mask = 0;
+	int i,taille;
+	taille = p_fort -p_faible;
+	for(i=0; i <= taille; i++)
+	{
+		mask = (mask<<1)|1;
+	}
+	mask=mask<<p_faible; //On positionne le masque au bon endroit
+	*m = (*m)|((v<<p_faible)&mask); // on decale v à la position ou il doit etre, on le tronque avec un masque si v est trop grand, et on le met dans le maillon
+}
+
+int get_field(int *m, int p_faible, int p_fort)
+{
+	int mask = 0;
+	int i,taille,v;
+	taille = p_fort -p_faible;
+	for(i=0; i <= taille; i++)
+	{
+		mask = (mask<<1)|1;
+	}
+	mask=mask<<p_faible;
+	v= ((*m)&mask)>>p_faible; //on selection la partie souhaité du maillon, puis on la décale
+	return v;
+}
+
+void set_ideb(int *m, int v)
+{
+	set_field(m,v,FAIBLE_I_DEB,FORT_I_DEB);
+}
+void set_ifin(int *m, int v)
+{
+	set_field(m,v,FAIBLE_I_FIN,FORT_I_FIN);
+}
+void set_jdeb(int *m, int v)
+{
+	set_field(m,v,FAIBLE_J_DEB,FORT_J_DEB);
+}
+void set_jfin(int *m, int v)
+{
+	set_field(m,v,FAIBLE_J_FIN,FORT_J_FIN);
+}
+void set_coule(int *m, int v)
+{
+	set_field(m,v,FAIBLE_COULE,FORT_COULE);
+}
+int get_ideb(int *m)
+{
+	return get_field(m,FAIBLE_I_DEB, FORT_I_DEB);
+}
+int get_ifin(int *m)
+{
+	return get_field(m,FAIBLE_I_FIN, FORT_I_FIN);
+}
+int get_jdeb(int *m)
+{
+	return get_field(m,FAIBLE_J_DEB, FORT_J_DEB);
+}
+int get_jfin(int *m)
+{
+	return get_field(m,FAIBLE_J_FIN, FORT_J_FIN);
+}
+int get_coule(int *m)
+{
+	return get_field(m,FAIBLE_COULE, FORT_COULE);
+}

@@ -41,6 +41,7 @@ int main(int argc, char **argv)
 	 //On rempli G
 	 remplir_grille(G, taille);
 	 affiche_jeu(G, taille);
+	 printf("\n\n\n\n\n\n\n\n\n\n\n\n\n");
 	 
 	 liste_navires * l = cree_liste_navires(G, taille);
 	 
@@ -54,7 +55,7 @@ int main(int argc, char **argv)
 	initialiser_grille(GC, taille);
 	
 	//afficher les grilles 
-	affiche_etat_coules(GC, taille);
+	//affiche_etat_coules(GC, taille);
 	
 	joue(G, GC, taille , *l , taille, taille);
 	return 0;

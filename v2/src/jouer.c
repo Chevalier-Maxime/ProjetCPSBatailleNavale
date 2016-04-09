@@ -6,24 +6,25 @@
 
 int navire_coule(maillon *m, int ic, int jc, grille gc)
 {
+	printf("Un navire touché\n");
 	int i, j;
 	
 	gc[ic][jc] = TOUCHER;	
 	
-	for(i = get_field(m,FAIBLE_I_DEB,FORT_I_DEB); i <=get_field(m,FAIBLE_I_FIN,FORT_I_FIN); i++)
+	for(i = get_ideb((&m->maille)); i <=get_ifin((&m->maille)); i++)
 	{
-		for(j = get_field(m,FAIBLE_J_DEB,FORT_J_DEB); j <=get_field(m,FAIBLE_J_FIN,FORT_J_FIN); j++)
+		for(j = get_jdeb((&m->maille)); j <=get_jfin((&m->maille)); j++)
 		{
 			if(gc[i][j]!=TOUCHER){return 0;}
 		}
 	}
 	printf("Coulé!\n");
-	for(i = get_field(m,FAIBLE_I_DEB,FORT_I_DEB); i <=get_field(m,FAIBLE_I_FIN,FORT_I_FIN); i++)
+	for(i = get_ideb((&m->maille)); i <=get_ifin((&m->maille)); i++)
 	{
-		for(j = get_field(m,FAIBLE_J_DEB,FORT_J_DEB); j <=get_field(m,FAIBLE_J_FIN,FORT_J_FIN); j++)
+		for(j = get_jdeb((&m->maille)); j <=get_jfin((&m->maille)); j++)
 		{
 			gc[i][j]=COULE;//afficher sur la grille
-			set_field(m,1,FAIBLE_COULE,FORT_COULE);//afficher dans chainon
+			set_coule((&m->maille),1);//afficher dans chainon
 		}
 	}
 	return 1;
@@ -34,11 +35,11 @@ int un_navire_coule(liste_navires l, int ic, int jc, grille gc)
 	maillon *m = l.debut;
 	while(m!=NULL)
 	{
-		if(get_field(m,FAIBLE_COULE,FORT_COULE)!=1)//si pas coulé
+		if(get_coule((&m->maille))!=1)//si pas coulé
 		{
-			if((ic>=get_field(m,FAIBLE_I_DEB,FORT_I_DEB))&&(ic<=get_field(m,FAIBLE_I_FIN,FORT_I_FIN)))
+			if((ic>=get_ideb((&m->maille)))&&(ic<=get_ifin((&m->maille))))
 			{
-				if((jc>=get_field(m,FAIBLE_J_DEB,FORT_J_DEB))&&(jc<=get_field(m,FAIBLE_J_FIN,FORT_J_FIN)))
+				if((jc>=get_jdeb((&m->maille)))&&(jc<=get_jfin((&m->maille))))
 				{
 					printf("Touché!\n");
 					return navire_coule(m, ic, jc, gc);
@@ -47,7 +48,6 @@ int un_navire_coule(liste_navires l, int ic, int jc, grille gc)
 		}
 		m = m->suivant;
 	}
-	printf("Raté!\n");
 	gc[ic][jc] = RATEE;
 	return 0;
 }
@@ -57,7 +57,7 @@ int jeu_fini(liste_navires l)
 	maillon *m = l.debut;
 	while(m!=NULL)
 	{
-		if(get_field(m,FAIBLE_COULE,FORT_COULE)==0){printf("Le jeu n'est pas fini\n");return 0;}
+		if(get_coule(&m->maille)==0){return 0;}
 		m = m->suivant;
 	}
 	return 1;
@@ -67,7 +67,6 @@ void joue(grille g, grille gc, int n , liste_navires l , int i, int j)
 {
 	int ic = -1;
 	int jc = -1;
-	int nbcoup =0;
 	while(!jeu_fini(l))
 	{
 		jc=-1;
@@ -79,10 +78,8 @@ void joue(grille g, grille gc, int n , liste_navires l , int i, int j)
 			scanf("%d %d", &ic, &jc);
 			
 		}
-		un_navire_coule(l, ic, jc, gc);
-		nbcoup ++;		
+		un_navire_coule(l, ic, jc, gc);		
 	}
-	printf("\n\n Vous avez gagné !!\n La partie à durée %d coups\n",nbcoup);
 }
 
 
