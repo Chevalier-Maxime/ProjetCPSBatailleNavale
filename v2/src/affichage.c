@@ -2,7 +2,11 @@
 #include <stdlib.h>
 #include "structureDonnee.h"
 
-
+/**
+ * Fonction permettant d'afficher la grille du jeu avec les bateaux
+ * @param g : La grille à afficher
+ * @param taille : La taille de la grille 
+ **/
 void affiche_jeu (grille g, int taille)
 {
 	printf("Le joueur J1 a place ses navires, etat de sa grille :\n");
@@ -34,6 +38,11 @@ void affiche_jeu (grille g, int taille)
 	
 }
 
+/**
+ * Fonction permettant d'afficher la grille du jeu du joueur 2 (sans les bateaux)
+ * @param g : La grille à afficher
+ * @param taille : La taille de la grille 
+ **/
 void affiche_etat_coules(grille g, int taille)
 {
 	printf("Le joueur J2 a lance ses torpilles, etat de sa grille :\n");

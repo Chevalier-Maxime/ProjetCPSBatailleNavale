@@ -6,6 +6,11 @@
 #define TAILLE_NOM_FICHIER 256
 
 
+/**
+ * Fonction permettant d'ouvrir un fichier en lecture
+ * Bloquante quand on donne un mauvais nom de fichier
+ * @return un pointeur sur le fichier
+**/ 
 FILE* ouvrir_fichier()
 {
 	char nomFichier[TAILLE_NOM_FICHIER];
@@ -28,7 +33,13 @@ FILE* ouvrir_fichier()
 	}while(fichier == NULL);
 	return fichier;
 }
-/*1 si ok ; 0 sinon*/
+
+/**
+ * Teste si la grille du joueur 1 comporte le bon nombre de bateaux.
+ * @param g : la grille du joueur 1 rempli
+ * @param n : la taille de la grille
+ * @return 1 si la grille est correctement rempli, 0 sinon
+**/
 int complet(grille g,int n)
 {
 	int porte_avion =  NB_PORTE_AVION;
@@ -113,6 +124,13 @@ int complet(grille g,int n)
 	return 1 ;
 }
 
+
+/**
+ * Remplie une grille a partir d'un fichier
+ * @param g : la grille à remplir
+ * @param n : la taille de la grille
+ * @return 1 si on arrive à remplir la grille, quitte le programme sinon
+**/
 int remplir_grille(grille g,int n)
 {
 	FILE* fichier = ouvrir_fichier();
@@ -154,6 +172,11 @@ int remplir_grille(grille g,int n)
 	{printf("Le fichier ne correspond pas à ce type de grille\n");exit(0);}	
 }
 
+/**
+ * Initialise une grille avec toutes les cases à BLANC
+ * @param g : la grille a initialiser
+ * @param n : la taille de la grille
+**/
 void initialiser_grille(grille g, int n)
 {
 	

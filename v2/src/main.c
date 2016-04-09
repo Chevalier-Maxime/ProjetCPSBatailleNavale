@@ -31,6 +31,7 @@ int main(int argc, char **argv)
 	}
 	
 	int i;
+	
 	//alloue la grille du joueur 1
 	//source : http://www.geeksforgeeks.org/dynamically-allocate-2d-array-c/
 	grille G = (char **)malloc(taille * sizeof(char *));
@@ -38,11 +39,10 @@ int main(int argc, char **argv)
 		 G[i] = (char *)malloc(taille * sizeof(char));
 	 }
 	 
-	 //On rempli G
+	 //On rempli G grace au fichier donné en parametres
 	 remplir_grille(G, taille);
 	 //~ affiche_jeu(G, taille);
-	 //~ printf("\n\n\n\n\n\n\n\n\n\n\n\n\n");
-	 printf("blop");
+
 	 
 	 liste_navires * l = cree_liste_navires(G, taille);
 	 
@@ -54,10 +54,9 @@ int main(int argc, char **argv)
 	 
 	//On initialise G2 pour le jeu
 	initialiser_grille(GC, taille);
-	
-	//afficher les grilles 
 	//affiche_etat_coules(GC, taille);
 	
+	//On lance la partie
 	joue(G, GC, taille , *l , taille, taille);
 	return 0;
 }
