@@ -10,4 +10,4 @@ $(EXEC): $(OBJS)
 	$(CC) $(OBJS) -o $(EXEC)
 
 clean:
-	-rm -rf ./src/*.o
+	-rm -rf ./*.o

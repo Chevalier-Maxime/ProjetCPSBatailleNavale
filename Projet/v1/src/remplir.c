@@ -156,17 +156,27 @@ int remplir_grille(grille g,int n)
 			 }
 			 else
 			 {printf("Le fichier est mal formé :(i1,j1)...(ik,jk)\n");exit(0);}
-			 findechaine = fgetc(fichier);//Lire ( ou EOF
+			 findechaine = fgetc(fichier);//Lire ( ou f
+			 
 			 if(g[i][j] == COLORIER)
 			 {
 				 printf("Des bateaux se supperposent. Vous devez changer de fichier\n");
 				 exit(0);
 				 break;
 			 }
+			 
+			 if((i<0)||(i>=n)||(j<0)||(j>=n))
+			 {
+				 printf("Les coordonées contenue dans le fichier ne correspondent pas à la grille\n");
+				 exit(0);
+				 break;
+			 }
 			 else{g[i][j] = COLORIER;}
 		}
 		fclose(fichier);
-		return complet(g,n);
+		if(complet(g,n)){return 1;}
+		else{printf("Grille mal formées\n");
+			 exit(0);}
 	}
 	else
 	{printf("Le fichier ne correspond pas à ce type de grille\n");exit(0);}	

@@ -22,27 +22,29 @@ int navire_coule(maillon *m, int ic, int jc, grille gc)
 		gc[ic][jc] = TOUCHER;	
 		
 		//On test le bateau courant est touché sur toutes ses cases
-		for(i = get_ideb((&m->maille)); i <=get_ifin((&m->maille)); i++)
+		for(i = m->i_deb; i <=m->i_fin; i++)
 		{
-			for(j = get_jdeb((&m->maille)); j <=get_jfin((&m->maille)); j++)
+			for(j = m->j_deb; j <=m->j_fin; j++)
 			{
 				if(gc[i][j]!=TOUCHER){return 0;}
 			}
 		}
+		
 		//Si oui, on dit a l'utilisateur que le bateau est coulé et on modifie la grille
 		//pour mettre toutes les cases à coulé
 		printf("Coulé!\n");
-		for(i = get_ideb((&m->maille)); i <=get_ifin((&m->maille)); i++)
+		for(i = m->i_deb; i <=m->i_fin; i++)
 		{
-			for(j = get_jdeb((&m->maille)); j <=get_jfin((&m->maille)); j++)
+			for(j = m->j_deb; j <=m->j_fin; j++)
 			{
 				gc[i][j]=COULE;//afficher sur la grille
-				set_coule((&m->maille),1);//afficher dans chainon
+				m->coule = 1;//afficher dans chainon
 			}
 		}
 	}
 	return 1;
 }
+
 
 /**
  * Fonction permettant de tester si on touche un bateau
@@ -57,11 +59,11 @@ int un_navire_coule(liste_navires l, int ic, int jc, grille gc)
 	maillon *m = l.debut;
 	while(m!=NULL)
 	{
-		if(get_coule((&m->maille))!=1)//si pas coulé
+		if(m->coule!=1)//si pas coulé
 		{
-			if((ic>=get_ideb((&m->maille)))&&(ic<=get_ifin((&m->maille))))
+			if((ic>=m->i_deb)&&(ic<=m->i_fin))
 			{
-				if((jc>=get_jdeb((&m->maille)))&&(jc<=get_jfin((&m->maille))))
+				if((jc>=m->j_deb)&&(jc<=m->j_fin))
 				{
 					printf("Touché!\n");
 					return navire_coule(m, ic, jc, gc);
@@ -70,9 +72,16 @@ int un_navire_coule(liste_navires l, int ic, int jc, grille gc)
 		}
 		m = m->suivant;
 	}
-	gc[ic][jc] = RATEE;
+	if((gc[ic][jc] == COULE)||(gc[ic][jc] == TOUCHER))
+	{printf("Vous avez déjà canardé cette zone!\n");}
+	else
+	{
+		printf("Raté!\n");
+		gc[ic][jc] = RATEE;
+	}
 	return 0;
 }
+
 
 /**
  * Fonction permettant de savoir si on a coulé tous les navires.
@@ -84,7 +93,7 @@ int jeu_fini(liste_navires l)
 	maillon *m = l.debut;
 	while(m!=NULL)
 	{
-		if(get_coule(&m->maille)==0){return 0;}
+		if(m->coule==0){return 0;}
 		m = m->suivant;
 	}
 	return 1;
@@ -106,14 +115,12 @@ void joue(grille g, grille gc, int n , liste_navires l , int i, int j)
 	int nbcoup =0;
 	int s;
 	int c;
-
 	while(!jeu_fini(l))
 	{
 		jc=-1;
 		ic=-1;
 		//On affiche la grille du joueur 2
 		affiche_etat_coules(gc,n);
-		
 		//Tant que l'utilisateur ne rentre pas des nombres entre 0 et n-1
 		while(((ic<0)||(ic>=n))||((jc<0)||(jc>=n)))
 		{
@@ -130,7 +137,6 @@ void joue(grille g, grille gc, int n , liste_navires l , int i, int j)
 				/* reussite de la saisie */
 				getchar(); /* on enleve le '\n' restant */
 			}
-			
 			if (((ic<0)||(ic>=n))||((jc<0)||(jc>=n)))
 			{
 				printf("Veuillez entrer des coordonnées entre %d et %d\n", 0, n-1);

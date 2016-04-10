@@ -163,10 +163,19 @@ int remplir_grille(grille g,int n)
 				 exit(0);
 				 break;
 			 }
+			 
+			 if((i<0)||(i>=n)||(j<0)||(j>=n))
+			 {
+				 printf("Les coordonées contenue dans le fichier ne correspondent pas à la grille\n");
+				 exit(0);
+				 break;
+			 }
 			 else{g[i][j] = COLORIER;}
 		}
 		fclose(fichier);
-		return complet(g,n);
+		if(complet(g,n)){return 1;}
+		else{printf("Grille mal formées\n");
+			 exit(0);}
 	}
 	else
 	{printf("Le fichier ne correspond pas à ce type de grille\n");exit(0);}	
