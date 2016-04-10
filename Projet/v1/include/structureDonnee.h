@@ -1,4 +1,4 @@
-
+/*Maxime Chavalier - Héloïse Fernandes de Almeida */
 #ifndef STRUCTUREDONNEE_H
 #define STRUCTUREDONNEE_H
 

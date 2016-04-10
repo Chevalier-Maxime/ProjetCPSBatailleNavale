@@ -1,3 +1,4 @@
+/*Maxime Chavalier - Héloïse Fernandes de Almeida */
 #include <stdio.h>
 #include <stdlib.h>
 #include "structureDonnee.h"

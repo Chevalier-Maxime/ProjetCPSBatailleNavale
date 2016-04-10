@@ -1,8 +1,4 @@
-/*
- * main.c
- * 
- * 
- */
+/*Maxime Chavalier - Héloïse Fernandes de Almeida */
 
 
 #include <stdio.h>

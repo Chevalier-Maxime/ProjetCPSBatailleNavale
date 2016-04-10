@@ -1,3 +1,4 @@
+/*Maxime Chavalier - Héloïse Fernandes de Almeida */
 #ifndef JOUER_H
 #define JOUER_H
 

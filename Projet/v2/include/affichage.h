@@ -1,3 +1,4 @@
+/*Maxime Chavalier - Héloïse Fernandes de Almeida */
 #ifndef AFFICHAGE_H
 #define AFFICHAGE_H
 
